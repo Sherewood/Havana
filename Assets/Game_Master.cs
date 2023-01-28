@@ -15,9 +15,9 @@ public class Game_Master : MonoBehaviour
     public int num_players = 2;
     public Player[] players;
     private Color[] PlayerColor;
-    public TextMeshProUGUI playerText;
+    public TextMeshProUGUI playerText;public TextMeshProUGUI WrongText; // both player text and text for if a wrong tile is selected 
     public bool start = true;
-    public (bool,List<Tiles>) win = (false,new List<Tiles>());
+    public (bool, List<Tiles>) win = (false, new List<Tiles>());
     public bool game = false;
 
 
@@ -26,10 +26,11 @@ public class Game_Master : MonoBehaviour
     void Start()
     {
         StartCoroutine(Initilize(0.01f));
-        //board.Initialize();
         PlayerColor = new Color[] { Color.red, Color.blue, Color.green, Color.black };
         AllocatePlayers(num_players);
         player.Active = false;
+        WrongText.enabled = false;
+        
 
 
 
@@ -39,15 +40,15 @@ public class Game_Master : MonoBehaviour
         players = new Player[numberOf];
         for (int i = 0; i < numberOf; i++)
         {
-            
+
             players[i] = Instantiate<Player>(player);
             players[i].player_color = PlayerColor[i];
 
             players[i].Active = false;
-            players[i].name = player.name+" "+  i;
+            players[i].name = player.name + " " + (i+1);
         }
         players[0].Active = true;
-      //  players[1].AI = true;
+        //  players[1].AI = true; part of attempted Ai programing 
 
     }
     public Color SetColor()
@@ -56,7 +57,7 @@ public class Game_Master : MonoBehaviour
         {
             if (players[i].Active)
             {
-               
+
                 return players[i].player_color;
 
             }
@@ -79,14 +80,12 @@ public class Game_Master : MonoBehaviour
             {
                 if (players[i].Active)
                 {
-                    playerText.text = players[i] + "It is now your turn";
+                    playerText.text = players[i].name + " It is now your turn";
                 }
 
 
             }
-            
-           // win = board.CheckWin();
-            //Debug.Log(win.Item1);
+
             if (win.Item1)
             {
                 for (int i = 0; i < players.Length; i++)
@@ -95,7 +94,6 @@ public class Game_Master : MonoBehaviour
                     {
                         playerText.text = players[i] + "Congraturaisins! You are winner";
                         game = false;
-                        Debug.Log(win.Item2.Count);
                         StartCoroutine(Flourish(win.Item2, 0.5f));
 
                     }
@@ -122,7 +120,7 @@ public class Game_Master : MonoBehaviour
         bool swap = false;
         win = board.CheckWin();
         int position = 0;
-        if(!win.Item1)
+        if (!win.Item1)
         {
             for (int i = 0; i < players.Length; i++)
             {
@@ -138,11 +136,11 @@ public class Game_Master : MonoBehaviour
             else if (position + 1 >= players.Length) players[0].Active = true;
         }
 
-        
+
     }
-    private IEnumerator Initilize (float WaitTime)
+    private IEnumerator Initilize(float WaitTime)
     {
-       
+
         yield return new WaitForSeconds(WaitTime);
         board.Initialize();
     }
@@ -152,12 +150,9 @@ public class Game_Master : MonoBehaviour
         yield return new WaitForSeconds(WaitTime);
         foreach (Tiles i in final)
         {
-            
+
             yield return new WaitForSeconds(WaitTime);
             i.GetComponentInChildren<MeshRenderer>().material.EnableKeyword("_EMISSION");
-            if (i.corner) Debug.Log("CORNER AT " + i.name);
-            else if (i.edge.Item1) Debug.Log("EDGE AT " + i.edge.Item2 + " AND NAME " + i.name);
-            else Debug.Log ( "NORMIE :"+i.name);
         }
 
     }

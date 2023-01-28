@@ -20,36 +20,35 @@ public class Player : MonoBehaviour
     {
         if (Active)
         {
-           if (!AI)
+            if (!AI)
             {
                 Vector3 mousePos = Input.mousePosition;
                 mousePos.z = 100;
                 this.transform.position = Camera.main.ScreenToWorldPoint(mousePos);
             }
-       /*    else
-            {
-                this.transform.position = new Vector3(10, 10, 10);
-              //  randoAI();
-            }*/
+            /*    else
+                 {
+                     this.transform.position = new Vector3(10, 10, 10);
+                   //  randoAI();
+                 }*/
 
         }
         else
         {
-           
-            Vector3 pos=new Vector3 (-10000f, -10000f, -10000f);
+
+            Vector3 pos = new Vector3(-10000f, -10000f, -10000f);
             this.transform.position = pos;
         }
- 
+
 
         this.GetComponent<MeshRenderer>().material.color = player_color;
     }
     private void randoAI()
     {
-       
 
-        
+
+
     }
-    //Debug.Log(transform.position + " THIS SHOULD WORK");
 
 
 
