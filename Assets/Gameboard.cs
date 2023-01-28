@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
  
@@ -39,56 +40,136 @@ public class Gameboard : MonoBehaviour
                
             }
         }
-        giveNeighbors();
+        
         BuildBoard();
+        giveNeighbors();
     }
     public void giveNeighbors()
     {
-        {
-            for (int y = 0; y < board.GetLength(1); y++)
+
+        int lenght = (2 * Base) / 2;
+        int counter = Base;
+            for (int y = 0; y < (2*Base); y++)
             {
 
-                for (int x = 0; x < board.GetLength(0); x++)
+                for (int x = 0; x < counter; x++)
                 {
 
-                    if (x-1 >=0)
+                    if (y < lenght)
+                    {
+                        
+                        if (x - 1 >= 0)
+                        {
+
+                            if (board[x - 1, y].drawn) board[x, y].neighbors.Add(board[x - 1, y]);//.Append(board[x - 1, y]);
+                        }
+                        if (x + 1 < scale)
+                        {
+
+                            if (board[x + 1, y].drawn)  board[x, y].neighbors.Add(board[x + 1, y]);
+                        }
+                        if (y - 1 >= 0)
+                        {
+
+                            if (board[x, y - 1].drawn)  board[x, y].neighbors.Add(board[x, y - 1]);
+                        }
+                        if (y + 1 < scale)
+                        {
+                            if (board[x, y + 1].drawn)  board[x, y].neighbors.Add(board[x, y + 1]);
+                        }
+                        if ((x + 1 < scale && y + 1 < scale))
+                        {
+                            if (board[x + 1, y + 1].drawn)  board[x, y].neighbors.Add(board[x + 1, y + 1]);
+                        }
+                        if ((x - 1 >= 0 && y - 1 >= 0))
+                        {
+                            if (board[x - 1, y - 1].drawn)  board[x, y].neighbors.Add(board[x - 1, y - 1]);
+                        }
+                    }
+                    else if (y == lenght)
                     {
 
-                       board[x, y].neighbors.Add(board[x - 1, y]);//.Append(board[x - 1, y]);
-                    }
-                    if (x + 1 < scale)
-                    {
+                   
+                        if (x - 1 >= 0)
+                        {
 
-                        board[x, y].neighbors.Add(board[x + 1, y]);
-                    }
-                    if (y-1 >= 0)
-                    {
+                            if (board[x - 1, y].drawn)  board[x, y].neighbors.Add(board[x - 1, y]);//.Append(board[x - 1, y]);
+                        }
+                        if (x + 1 < scale)
+                        {
 
-                        board[x, y].neighbors.Add(board[x, y-1]);
-                    }
-                    if (y + 1 < scale)
-                    {
-                        board[x, y].neighbors.Add(board[x, y + 1]);
-                    }
-                    if (y+1 <scale && x-1 >=0)
-                    {
+                            if (board[x + 1, y].drawn)  board[x, y].neighbors.Add(board[x + 1, y]);
+                        }
+                        if (y - 1 >= 0)
+                        {
+                        if (board[x, y ].drawn) { }  board[x, y].neighbors.Add(board[x, y - 1]);
+                        }
+                        if (y + 1 < scale)
+                        {
+                            if (board[x, y + 1].drawn)  board[x, y].neighbors.Add(board[x, y + 1]);
+                        }
 
-                        board[x, y].neighbors.Add(board[x-1, y + 1]);
+                        if ((x - 1 >= 0 && y - 1 >= 0))
+                        {
+                            if (board[x - 1, y - 1].drawn)  board[x, y].neighbors.Add(board[x - 1, y - 1]);
+                        }
+                        if ((x - 1 >= 0 && y + 1 < scale))
+                        {
+                        
+                        if (board[x - 1, y + 1].drawn)  board[x, y].neighbors.Add(board[x - 1, y + 1]);
+                        }
                     }
-                    if (x+1 < scale && y-1 >= 0)
+                    else if (y > lenght)
                     {
-                        board[x, y].neighbors.Add(board[x + 1, y - 1]);
-                    }
-                    if ((y-1>=0) && (x-1>=0))
-                    {
+                        
+                        if (x - 1 >= 0)
+                        {
 
-                        board[x, y].neighbors.Add(board[x - 1, y - 1]);
+                            if (board[x - 1, y].drawn)  board[x, y].neighbors.Add(board[x - 1, y]);//.Append(board[x - 1, y]);
+                        }
+                        if (x + 1 < scale)
+                        {
+                            
+                            if (board[x + 1, y].drawn)  board[x, y].neighbors.Add(board[x + 1, y]);
+                        }
+                        if (y - 1 >= 0)
+                        {
+
+                            if (board[x, y - 1].drawn) board[x, y].neighbors.Add(board[x, y - 1]);
+                        }
+                        if (y + 1 < scale)
+                        {
+                            if (board[x, y + 1].drawn)  board[x, y].neighbors.Add(board[x, y + 1]);
+                        }
+                        if ((x - 1 >= 0 && y + 1 < scale))
+                        {
+
+                            if (board[x - 1, y + 1].drawn) board[x, y].neighbors.Add(board[x - 1, y + 1]);
+                        }
+                        if ((x + 1 < scale  && y - 1 >= 0))
+                        {
+
+                            if (board[x + 1, y - 1].drawn) board[x, y].neighbors.Add(board[x + 1, y - 1]);
+                        }
                     }
-                    
-                }
+
+                   }
+            if (y < lenght)
+            {
+                counter++;
+
+
+            }
+            else
+            {
+                counter--;
+
+
             }
         }
     }
+        
+    
     void BuildBoard()
     {
 
@@ -112,6 +193,7 @@ public class Gameboard : MonoBehaviour
             float resety = nxtPos.y;
             for (int x = 0; x <= counter; x++)
             {
+             
                 int interval = x;//halfway + (counter / 2) - (x);                 
                Tiles new_tile = board[(interval), y];
                 //hardcoding in "corners" and "edges" Tiles which represent the end of the board 
@@ -183,6 +265,7 @@ public class Gameboard : MonoBehaviour
     {
 
             List<Tiles> fork;
+        (bool, List<Tiles>) ring;
             for (int y = 0; y < board.GetLength(1); y++)
             {
 
@@ -198,9 +281,9 @@ public class Gameboard : MonoBehaviour
                             fork.Add(board[x, y]);
                             
                             fork.Equals(CheckWin(board[x, y], fork));
-                            //fork.Insert(0, board[x, y]);
+                        //fork.Insert(0, board[x, y]);
 
-                            if (fork.Count >=3 && isAWin(fork).Item1 )
+                        if (isAWin(fork).Item1  &&fork.Count >=3  )
                             {
                                 return (true, fork);
                             }
@@ -208,25 +291,20 @@ public class Gameboard : MonoBehaviour
                         }
                         else
                         {
-                            board[x, y].marked = true;
-                            fork.Add(board[x, y]);
-                            fork.Equals(CheckWin(board[x, y], fork));
-                            //fork.Insert(0, board[x, y]);
-                            if (isARing(fork).Item1 )
-                            {
-                                return (true, fork);
-                            }
+                        ring = (false,new List<Tiles>());
+                        board[x, y].marked = true;
+                        ring.Item2.Add(board[x, y]);
+                        ring = isARing(board[x, y], ring.Item2);
+                        
+                        if (ring.Item1)
+                        {
+                            return (true, ring.Item2);
                         }
+                        
+                    }
                     }
                 }
-  //          }
         }
-        /* PSEUDO CODE FOR GAME BOARD 
-         * SCAN BOARD 
-         * CHECK IF PATTERN REACHES EDGES (Different sides) OR CORNERS 
-         * FORK RECURSIVE LOOP, START WITH COLOR TILE, SEE IF IT HAS NEIGHBORS UNTIL TWO NEIGHBORS ARE EDGES FROM DIFFERENT SIDES 
-         * Bridge LOOP: START WITH COLOR TILE, SEE IF IT HAS NEIGHBORS THAT ARE IN TWO CORNERS 
-         * CIRCLE LOOP. BUILD PATTERN OF WHITE TILES. IF IT CANNOT ADVANCE BECUASE OF ONE COLOR, IT IS A CIRCLE. ALTERNATE COLORS.*/
         refresh();
         return (false,new List<Tiles>());
     }
@@ -240,27 +318,23 @@ public class Gameboard : MonoBehaviour
             }
         }
     }
-    private List<Tiles> CheckWin(Tiles tile, List<Tiles> winCon)
+    public List<Tiles> CheckWin(Tiles tile, List<Tiles> winCon)
     {
-       // Debug.Log(tile.neighbors.Count);
         foreach (Tiles i in tile.neighbors)
         {
-            
+           
 
-            if (i.drawn==true && !i.marked )
+            if ( i.drawn  &&!i.marked )
             {
-                
-
                 if (!GameObjectContains(i.name,winCon))
                 {
-                    
-
                     if (i.color == tile.color)
                     {
                         i.marked = true;
                         winCon.Add(i);
 
                         winCon = CheckWin(i, winCon);
+                       
                 }
                 }
             }
@@ -285,35 +359,29 @@ public class Gameboard : MonoBehaviour
     }
     private (bool,List<Tiles>) isAWin(List<Tiles> final)
     {
-      //  Debug.Log(final);
 
         int CornerCounter = 0;
         List<int> EdgeNumber = new List<int>();
         foreach (Tiles i in final)
         {
-            if (i.corner) { i.GetComponentInChildren<MeshRenderer>().material.EnableKeyword("_EMISSION"); 
+            if (i.corner) { 
                 CornerCounter++; }
             else if (i.edge.Item1)
             {
                 if (!EdgeNumber.Contains(i.edge.Item2))
                 {
-                    Debug.Log(i.edge.Item2);
+  
                     EdgeNumber.Add(i.edge.Item2);
                 }
             }
         }
         if (CornerCounter >=2)
         {
-         //   Debug.Log("VICTORIA PARA CORNERS :" + CornerCounter);
-            
-           
-           // Debug.Log("HEAK");
             done = true;
             return (true,final);
         }
         else if (EdgeNumber.Count >=3)
-        {
-           // Debug.Log("VICTORIA PARA EDGOES: "+EdgeNumber.Count);
+        {          
             done = true;
             return (true,final);
         }
@@ -322,30 +390,31 @@ public class Gameboard : MonoBehaviour
             return (false,final);
         }
     }
-    private (bool, List<Tiles>) isARing (List<Tiles> final)
+    private (bool, List<Tiles>) isARing (Tiles i, List<Tiles> final)
     {
-        foreach (Tiles i in final)
+        bool check = true;
+
+       if (i.corner || i.edge.Item1)
         {
-            if (i.edge.Item1 || !i.corner)
-            {
-                return (false, final);
-            }
+            final.Add(i);
+            
+            return (false, final);
         }
-        bool circle;
-        Color selectedColor = final[0].neighbors[0].color;
-        
-        foreach (Tiles i in final)
+       else
         {
             foreach (Tiles neighbor in i.neighbors)
             {
-                if (neighbor.color != selectedColor || neighbor.color==Color.white) return (false, final);
-                
+                if (neighbor.color ==i.color && !GameObjectContains(neighbor.name,final))
+                {
+                    final.Add(neighbor);
+                    
+                    check=isARing(neighbor, final).Item1;
+                    if (check == false) break;
+                }    
             }
+            if (check) return (true, final);
+            else return (false, final);
         }
-        
-        done = true;
-    //    Debug.Log("VICTORIA PARA SPHEROA");
-        return (true, final) ;
     }
 
     IEnumerator Bar(System.Action<bool> callback)

@@ -85,8 +85,6 @@ public class Game_Master : MonoBehaviour
 
             }
             
-           // win = board.CheckWin();
-            //Debug.Log(win.Item1);
             if (win.Item1)
             {
                 for (int i = 0; i < players.Length; i++)
@@ -95,7 +93,6 @@ public class Game_Master : MonoBehaviour
                     {
                         playerText.text = players[i] + "Congraturaisins! You are winner";
                         game = false;
-                        Debug.Log(win.Item2.Count);
                         StartCoroutine(Flourish(win.Item2, 0.5f));
 
                     }
@@ -155,9 +152,6 @@ public class Game_Master : MonoBehaviour
             
             yield return new WaitForSeconds(WaitTime);
             i.GetComponentInChildren<MeshRenderer>().material.EnableKeyword("_EMISSION");
-            if (i.corner) Debug.Log("CORNER AT " + i.name);
-            else if (i.edge.Item1) Debug.Log("EDGE AT " + i.edge.Item2 + " AND NAME " + i.name);
-            else Debug.Log ( "NORMIE :"+i.name);
         }
 
     }
