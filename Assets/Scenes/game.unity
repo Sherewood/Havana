@@ -152,7 +152,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fc8285149eafb354b893ecea8d8e8c18, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.33
+  m_Volume: 0
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -341,8 +341,6 @@ MonoBehaviour:
   vert: 0
   corner: 0
   marked: 0
-  edgeTest: 0
-  edgeValTest: 0
 --- !u!4 &553908127 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cfcc01b57114e494daf6b2fa27ff6910, type: 3}
@@ -1089,7 +1087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiles: {fileID: 553908126}
-  Base: 9
+  Base: 10
 --- !u!4 &2039984420
 Transform:
   m_ObjectHideFlags: 0

@@ -18,8 +18,6 @@ public class Tiles : MonoBehaviour
     public bool corner;
     public bool marked =false;
     public (bool, int) edge;
-    public bool edgeTest;
-    public int edgeValTest;
     
     // Start is called before the first frame update
     void Start()
@@ -40,8 +38,7 @@ public class Tiles : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        edgeTest = edge.Item1;
-        edgeValTest = edge.Item2;
+        
     }
     void OnMouseDown()
     {
@@ -49,19 +46,16 @@ public class Tiles : MonoBehaviour
     }
     public void ColorSet()
     {
-        
         if (GameObject.Find("Game_Master").GetComponent<Game_Master>().game && color == Color.white)
         {
+            // Debug.Log("NAME: "+name+" IS IT A CORNER? " + corner + "IS IT AN EDGE ? " + edge);
             color = GameObject.Find("Game_Master").GetComponent<Game_Master>().SetColor();
             GameObject.Find("Game_Master").GetComponent<Game_Master>().SwapPlayers();
             this.GetComponentInChildren<MeshRenderer>().material.color = color;
             this.isclicked = true;
-            this.isclicked = true;
-   
-
+            
             // Code here is called when the GameObject is clicked on.
         }
-
     }
     private void OnMouseOver()
     {
